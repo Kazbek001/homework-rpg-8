@@ -1,11 +1,11 @@
-# 🏰 Homework 8 — The Haunted Tower: Ascending the Floors
+#  Homework 8 — The Haunted Tower: Ascending the Floors
 
-## 📋 Overview
+##  Overview
 This project is a tower-climbing RPG implemented in Java. The main goal is to demonstrate the practical use of two behavioral design patterns: **State** and **Template Method**. Heroes ascend the tower floor by floor, facing different challenges while managing internal status effects that change dynamically.
 
 ---
 
-## 🛠 Design Patterns
+##  Design Patterns
 
 ### 1. State Pattern
 Governs **intra-entity behavior changes**. Each hero carries a `HeroState` that modifies combat performance. 
@@ -23,7 +23,7 @@ Governs **inter-activity algorithm structure**. The `TowerFloor` abstract class 
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 | File | Description |
 | :--- | :--- |
@@ -37,7 +37,7 @@ Governs **inter-activity algorithm structure**. The `TowerFloor` abstract class 
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 * JDK 11 or higher installed.
