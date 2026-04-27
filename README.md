@@ -1,5 +1,49 @@
-Homework 8 — The Haunted Tower: Ascending the FloorsOverviewIn this assignment, you will implement two behavioral design patterns — State and Template Method — inside a tower-climbing RPG.Heroes ascend a tower floor by floor, each carrying internal states that affect their combat performance and can transition on their own (poison wears off, stun clears, rage ignites under low HP). Each floor follows a structure fixed by a template method.🛠 Patterns CoveredPatternRole in this SystemStateGoverns intra-entity behavior changes. Each hero carries a HeroState that modifies damage dealt/received and can self-transition.Template MethodGoverns inter-activity algorithm structure. Each TowerFloor subclass follows a fixed skeleton: announce → setup → resolveChallenge → awardLoot → cleanup.Note: These patterns are independent — State does not depend on Template Method, and vice versa.📂 Project Structure (What Is Provided)Based on the provided project skeleton:src/com/narxoz/rpg/state/HeroState.java: State interface.src/com/narxoz/rpg/floor/TowerFloor.java: Abstract class with the fixed template method.src/com/narxoz/rpg/floor/FloorResult.java: Floor exploration result data class.src/com/narxoz/rpg/combatant/Hero.java: Hero skeleton.src/com/narxoz/rpg/combatant/Monster.java: Monster concrete class.src/com/narxoz/rpg/tower/TowerRunResult.java: Tower run result data class.src/com/narxoz/rpg/Main.java: Entry point skeleton.⚙️ Implementation Details1. Template Method StructureThe TowerFloor class defines the explore() method as final to ensure the sequence of steps cannot be changed by subclasses:announce(): Displays floor entry info.setup(party): Abstract step for floor preparation.resolveChallenge(party): Abstract step where the core logic happens.awardLoot(party, result): Award rewards if shouldAwardLoot hook returns true.cleanup(party): An optional hook for post-floor logic.2. State Self-TransitionsPoisonedState: Reduces HP every turn and reverts to NormalState after a set duration.StunnedState: Skips the hero's turn for 1 round and then clears itself.BerserkState: Automatically triggers or enhances damage when the hero's HP is below a certain threshold.🚀 Quick StartTo compile and run the project from the terminal:Bash# Compile
-javac -d out $(find src -name "*.java")
+# 🏰 Homework 8 — The Haunted Tower: Ascending the Floors
 
-# Run
-java -cp out com.narxoz.rpg.Main
+## 📋 Overview
+This project is a tower-climbing RPG implemented in Java. The main goal is to demonstrate the practical use of two behavioral design patterns: **State** and **Template Method**. Heroes ascend the tower floor by floor, facing different challenges while managing internal status effects that change dynamically.
+
+---
+
+## 🛠 Design Patterns
+
+### 1. State Pattern
+Governs **intra-entity behavior changes**. Each hero carries a `HeroState` that modifies combat performance. 
+* **Self-Transitions:** The states are responsible for their own transitions (e.g., poison wears off after 3 turns, or stun clears).
+* **Impact:** Modifies outgoing/incoming damage and determines if a hero can take an action.
+
+### 2. Template Method Pattern
+Governs **inter-activity algorithm structure**. The `TowerFloor` abstract class defines a fixed skeleton for exploring any floor.
+* **The Template Method:** `explore(List<Hero> party)` is marked as `final`.
+* **The Steps:** 1. `announce()` — Initial message.
+    2. `setup()` — Abstract step for floor preparation.
+    3. `resolveChallenge()` — Abstract step for the main logic (combat/rest).
+    4. `awardLoot()` — Reward phase (conditional hook).
+    5. `cleanup()` — Optional hook for post-floor logic.
+
+---
+
+## 📂 Project Structure
+
+| File | Description |
+| :--- | :--- |
+| `HeroState.java` | Interface defining the contract for hero states. |
+| `TowerFloor.java` | Abstract base class containing the **Template Method**. |
+| `FloorResult.java` | Data class representing the outcome of a floor. |
+| `Hero.java` | Concrete class for heroes, managing their current `HeroState`. |
+| `Monster.java` | Concrete class for enemies encountered on floors. |
+| `TowerRunResult.java` | Summary of the entire tower run. |
+| `Main.java` | Entry point that initializes the tower and runs the simulation. |
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+* JDK 11 or higher installed.
+* Any Java IDE (IntelliJ IDEA recommended).
+
+### Compilation
+From the project root directory, run:
+```bash
+javac -d out $(find src -name "*.java")
