@@ -1,58 +1,5 @@
-# Homework 8 — The Haunted Tower: Ascending the Floors
-
-## Overview
-
-In this assignment you will implement two behavioral design patterns — **State** and **Template Method** — inside a tower-climbing RPG.
-
-Heroes ascend a tower floor by floor, each hero carrying internal states that affect their combat performance and can transition on their own (poison wears off, stun clears, rage ignites under low HP). Each floor is a specialization of an abstract floor archetype whose structure is fixed by a template method — subclasses fill in the pieces and may override optional hooks.
-
-This homework explores how the two patterns solve different problems without depending on each other structurally.
-
----
-
-## Patterns Covered
-
-| Pattern | Role in this system |
-|---------|-------------------|
-| **State** | Governs *intra-entity behavior changes* — each hero carries a `HeroState` that modifies damage dealt/received and can self-transition. The hero's state is its own responsibility. |
-| **Template Method** | Governs *inter-activity algorithm structure* — each `TowerFloor` subclass follows a fixed skeleton (`announce → setup → resolveChallenge → awardLoot → cleanup`); subclasses fill in the abstract steps and may override optional hooks. |
-
-These patterns are independent — State does not depend on Template Method, and vice versa. Seeing each in isolation is a core learning goal.
-
----
-
-## What Is Provided
-
-| File | Description |
-|------|-------------|
-| `src/com/narxoz/rpg/state/HeroState.java` | State interface |
-| `src/com/narxoz/rpg/floor/TowerFloor.java` | Abstract class with template method |
-| `src/com/narxoz/rpg/floor/FloorResult.java` | Floor exploration result data class |
-| `src/com/narxoz/rpg/combatant/Hero.java` | Hero skeleton |
-| `src/com/narxoz/rpg/combatant/Monster.java` | Monster concrete class |
-| `src/com/narxoz/rpg/tower/TowerRunResult.java` | Tower run result data class |
-| `src/com/narxoz/rpg/Main.java` | Entry point skeleton |
-
-Everything else — concrete `HeroState` implementations, concrete `TowerFloor` subclasses, tower runner logic, and the demo — is yours to design and build.
-
----
-
-## Quick Start
-
-```bash
-# Compile
+Homework 8 — The Haunted Tower: Ascending the FloorsOverviewIn this assignment, you will implement two behavioral design patterns — State and Template Method — inside a tower-climbing RPG.Heroes ascend a tower floor by floor, each carrying internal states that affect their combat performance and can transition on their own (poison wears off, stun clears, rage ignites under low HP). Each floor follows a structure fixed by a template method.🛠 Patterns CoveredPatternRole in this SystemStateGoverns intra-entity behavior changes. Each hero carries a HeroState that modifies damage dealt/received and can self-transition.Template MethodGoverns inter-activity algorithm structure. Each TowerFloor subclass follows a fixed skeleton: announce → setup → resolveChallenge → awardLoot → cleanup.Note: These patterns are independent — State does not depend on Template Method, and vice versa.📂 Project Structure (What Is Provided)Based on the provided project skeleton:src/com/narxoz/rpg/state/HeroState.java: State interface.src/com/narxoz/rpg/floor/TowerFloor.java: Abstract class with the fixed template method.src/com/narxoz/rpg/floor/FloorResult.java: Floor exploration result data class.src/com/narxoz/rpg/combatant/Hero.java: Hero skeleton.src/com/narxoz/rpg/combatant/Monster.java: Monster concrete class.src/com/narxoz/rpg/tower/TowerRunResult.java: Tower run result data class.src/com/narxoz/rpg/Main.java: Entry point skeleton.⚙️ Implementation Details1. Template Method StructureThe TowerFloor class defines the explore() method as final to ensure the sequence of steps cannot be changed by subclasses:announce(): Displays floor entry info.setup(party): Abstract step for floor preparation.resolveChallenge(party): Abstract step where the core logic happens.awardLoot(party, result): Award rewards if shouldAwardLoot hook returns true.cleanup(party): An optional hook for post-floor logic.2. State Self-TransitionsPoisonedState: Reduces HP every turn and reverts to NormalState after a set duration.StunnedState: Skips the hero's turn for 1 round and then clears itself.BerserkState: Automatically triggers or enhances damage when the hero's HP is below a certain threshold.🚀 Quick StartTo compile and run the project from the terminal:Bash# Compile
 javac -d out $(find src -name "*.java")
 
 # Run
 java -cp out com.narxoz.rpg.Main
-```
-
-See `QUICKSTART.md` for IDE setup and detailed instructions.
-
----
-
-## Read Next
-
-- `ASSIGNMENT.md` — full requirements, pattern contracts, and grading rubric
-- `STUDENT_CHECKLIST.md` — phase-by-phase progress tracker
-- `FAQ.md` — answers to common questions about the patterns and implementation
